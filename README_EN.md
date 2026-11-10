@@ -72,7 +72,7 @@ URL parameters:
 
 Render resolution adapts: the internal resolution drops when frames run long and recovers when there is headroom. The bottom-left corner shows the current frame rate and the actual render resolution.
 
-On an Apple M1 Pro, headless Chrome renders and screenshots 1920×1080 frames at about 1.4 frames per second. Screenshot encoding is the bottleneck there, so that number does not describe the interactive frame rate.
+On an Apple M1 Pro, headless Chrome renders and screenshots 1920×1080 frames at about 1.4 frames per second as PNG and about 15 as JPEG. Screenshot encoding is the bottleneck, so neither number describes the interactive frame rate.
 
 ## Recording the promo video
 

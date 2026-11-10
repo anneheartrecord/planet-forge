@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Planet Forge cover</title>
+<style>
+  html, body { margin: 0; width: 1600px; height: 900px; background: #000; overflow: hidden; font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif; color: #fff; }
+  .grid { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); }
+  .grid div { background-size: cover; background-position: center; }
+  .shade { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.35) 48%, rgba(0, 0, 0, 0.1) 100%); }
+  .text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; text-shadow: 0 4px 40px #000, 0 0 6px #000; }
+  .brand { font: 600 20px ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: 0.5em; color: #9fc9ff; }
+  h1 { font-size: 128px; line-height: 1.1; margin: 22px 0 26px; font-weight: 800; letter-spacing: 0.02em; }
+  .sub { font-size: 38px; font-weight: 600; letter-spacing: 0.06em; }
+  .sub b { color: #ffd27a; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="grid">
+  <div style="background-image:url(shots/terran.png)"></div>
+  <div style="background-image:url(shots/desert.png)"></div>
+  <div style="background-image:url(shots/ice.png)"></div>
+  <div style="background-image:url(shots/lava.png)"></div>
+  <div style="background-image:url(shots/alien.png)"></div>
+  <div style="background-image:url(shots/ocean.png)"></div>
+</div>
+<div class="shade"></div>
+<div class="text">
+  <div class="brand">PLANET FORGE</div>
+  <h1>一句话，一颗星球</h1>
+  <div class="sub"><b>1</b> 个 HTML 文件 · <b>0</b> 依赖 · 每个像素由着色器现算</div>
+</div>
+</body>
+</html>
