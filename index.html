@@ -304,8 +304,8 @@ vec3 background(vec3 d) {
   col += vec3(0.8, 0.88, 1.0) * starLayer(d, 320.0, 0.99) * 0.8;
   float band = fbm(d * 2.2 + 11.0, 5);
   float dust = fbm(d * 5.0 + 3.0, 4);
-  col += vec3(0.16, 0.2, 0.42) * pow(band, 4.0) * 1.1;
-  col += vec3(0.42, 0.18, 0.4) * pow(band * dust * 2.0, 3.0) * 0.5;
+  col += vec3(0.16, 0.2, 0.42) * pow(band, 4.0) * 0.8;
+  col += vec3(0.42, 0.18, 0.4) * pow(band * dust * 2.0, 3.0) * 0.32;
   return col;
 }
 
@@ -342,6 +342,8 @@ vec3 shadeSurface(vec3 p, vec3 rd, vec3 sun, float cloudShadow, float ringShadow
     albedo = mix(albedo, uRock, smoothstep(0.26, 0.6, e + slope * 0.35));
     albedo = mix(albedo, uSnow, smoothstep(uIce + 0.06, uIce - 0.06, temp));
     albedo *= 0.82 + 0.36 * fbm(p * 22.0 + seed, 3);
+    // On molten worlds the shoreline glows from the heat of the sea next to it.
+    if (uEmissive > 0.0) emissive = uShallow * uEmissive * 0.45 * smoothstep(0.07, 0.0, e);
   } else {
     float depth = (uSea - h) / max(uSea, 0.05);
     albedo = mix(uShallow, uDeep, smoothstep(0.0, 0.3, depth));
@@ -374,8 +376,8 @@ vec3 shadeSurface(vec3 p, vec3 rd, vec3 sun, float cloudShadow, float ringShadow
   if (uCity > 0.0 && land) {
     float night = smoothstep(0.02, -0.16, dot(N, sun));
     if (night > 0.0) {
-      float region = smoothstep(0.5, 0.66, fbm(p * 6.0 + seed + 80.0, 3));
-      float towns = smoothstep(0.52, 0.78, fbm(p * 46.0 + seed, 3));
+      float region = smoothstep(0.4, 0.56, fbm(p * 6.0 + seed + 80.0, 3));
+      float towns = smoothstep(0.46, 0.7, fbm(p * 46.0 + seed, 3));
       float habitable = (1.0 - smoothstep(0.02, 0.3, e)) * smoothstep(0.3, 0.45, 1.0 - pow(lat, 2.2) * 1.15);
       col += vec3(1.0, 0.72, 0.36) * 1.5 * uCity * night * region * towns * habitable;
     }
@@ -560,9 +562,9 @@ void main() {
       ring: 0.55, moon: 0.5, temp: [-140, -38],
     },
     lava: {
-      zh: '熔岩行星', weight: 2, sea: 0.47, mount: 1.3, ice: -1, cloud: 0.26, atm: 0.8, city: 0, emissive: 2.6,
-      atmColor: [1.0, 0.36, 0.12], deep: [0.95, 0.2, 0.02], shallow: [1.0, 0.5, 0.06], sand: [0.2, 0.08, 0.04],
-      lowA: [0.07, 0.06, 0.06], lowB: [0.13, 0.08, 0.06], rock: [0.04, 0.04, 0.045], snow: [0.22, 0.2, 0.19], cloudColor: [0.3, 0.24, 0.22],
+      zh: '熔岩行星', weight: 2, sea: 0.47, mount: 1.3, ice: -1, cloud: 0.26, atm: 0.8, city: 0, emissive: 1.5,
+      atmColor: [1.0, 0.36, 0.12], deep: [0.8, 0.1, 0.01], shallow: [1.0, 0.32, 0.03], sand: [0.2, 0.08, 0.04],
+      lowA: [0.16, 0.12, 0.11], lowB: [0.24, 0.14, 0.1], rock: [0.1, 0.09, 0.095], snow: [0.22, 0.2, 0.19], cloudColor: [0.3, 0.24, 0.22],
       ring: 0.15, moon: 0.35, temp: [420, 1180],
     },
     alien: {
