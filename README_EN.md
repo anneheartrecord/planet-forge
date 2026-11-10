@@ -43,7 +43,7 @@ Double-click `index.html`, or:
 open index.html
 ```
 
-A browser with WebGL2 is required. Recent versions of Chrome, Edge, Safari and Firefox all work.
+A browser with WebGL2 is required. It has only been tested in Chrome on macOS so far. Other WebGL2 browsers should work but are unverified.
 
 ## Controls
 
@@ -72,7 +72,7 @@ URL parameters:
 
 Render resolution adapts: the internal resolution drops when frames run long and recovers when there is headroom. The bottom-left corner shows the current frame rate and the actual render resolution.
 
-On an Apple M1 Pro, headless Chrome renders and screenshots 1920×1080 frames at about 1.4 frames per second as PNG and about 15 as JPEG. Screenshot encoding is the bottleneck, so neither number describes the interactive frame rate.
+On an Apple M1 Pro, interactive rendering at 2880×1800 measured 37 to 60 fps, lowest while morphing between planets. Headless Chrome renders and screenshots 1920×1080 frames at about 1.4 frames per second as PNG and about 15 as JPEG. Screenshot encoding is the bottleneck for those two numbers.
 
 ## Recording the promo video
 
