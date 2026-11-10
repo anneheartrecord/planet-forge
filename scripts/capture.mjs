@@ -1,6 +1,6 @@
 // Drives the demo in headless Chrome over the DevTools protocol. No npm packages.
 //   node scripts/capture.mjs shot  <out.png> "<query>" [width height] [warmupSeconds]
-//   node scripts/capture.mjs video <outDir> [width height fps]
+//   node scripts/capture.mjs video <outDir> [width height fps startFrame endFrame]
 import { spawn } from 'node:child_process';
 import { mkdirSync, writeFileSync, mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -83,8 +83,8 @@ async function open(cdp, query, width, height) {
   throw new Error('page never became ready');
 }
 
-async function screenshot(cdp, file) {
-  const { data } = await cdp.send('Page.captureScreenshot', { format: 'png' });
+async function screenshot(cdp, file, format = 'png') {
+  const { data } = await cdp.send('Page.captureScreenshot', format === 'jpeg' ? { format, quality: 97 } : { format });
   writeFileSync(file, Buffer.from(data, 'base64'));
 }
 
@@ -109,19 +109,21 @@ async function main() {
     return;
   }
 
-  const [w = '1920', h = '1080', f = '30'] = rest;
-  const width = Number(w), height = Number(h), fps = Number(f);
+  const [w = '1920', h = '1080', f = '30', sf = '0', ef = '0'] = rest;
+  const width = Number(w), height = Number(h), fps = Number(f), startFrame = Number(sf);
   mkdirSync(out, { recursive: true });
   const { child, wsUrl } = await launch(width, height);
   try {
     const cdp = await connect(wsUrl);
     await open(cdp, 'capture&clean', width, height);
     const end = await evaluate(cdp, 'planetForge.startTour(), planetForge.tourEnd');
-    const frames = Math.round(end * fps) - 1;
+    const frames = Number(ef) || Math.round(end * fps) - 1;
     const started = Date.now();
+    // The tour is deterministic, so an interrupted run resumes by replaying the skipped frames unrecorded.
     for (let i = 0; i < frames; i++) {
       await evaluate(cdp, `planetForge.step(${1 / fps})`);
-      await screenshot(cdp, join(out, `f${String(i).padStart(5, '0')}.png`));
+      if (i < startFrame) continue;
+      await screenshot(cdp, join(out, `f${String(i).padStart(5, '0')}.jpg`), 'jpeg');
       if (i % 60 === 0) console.log(`frame ${i}/${frames}  ${((Date.now() - started) / 1000).toFixed(0)}s`);
     }
     if (cdp.logs.length) console.log(cdp.logs.join('\n'));
