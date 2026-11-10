@@ -93,7 +93,7 @@ ffmpeg -framerate 30 -i frames/f%05d.jpg -c:v libx264 -pix_fmt yuv420p -crf 18 t
 
 | 文件 | 内容 |
 |---|---|
-| `index.html` | 全部内容：样式、着色器、交互逻辑，共 1028 行 |
+| `index.html` | 全部内容：样式、着色器、交互逻辑，共 1029 行 |
 | `scripts/capture.mjs` | 截图与视频逐帧导出脚本 |
 | `promo/` | 宣传图与视频 |
 

@@ -93,7 +93,7 @@ Node.js 22 or later and a local Chrome are required. Set the `CHROME` environmen
 
 | File | Contents |
 |---|---|
-| `index.html` | Everything: styles, shader and interaction logic, 1028 lines |
+| `index.html` | Everything: styles, shader and interaction logic, 1029 lines |
 | `scripts/capture.mjs` | Screenshot and frame-by-frame video export |
 | `promo/` | Promo images and video |
 
